@@ -1,23 +1,21 @@
 <template>
-  <w-app>
-    <header>
-      <h1>Extra Sjaj</h1>
-    </header>
+  <header>
+    <h1>Extra Sjaj</h1>
+  </header>
+  <input type="text" id="fname" name="firstname" placeholder="Pretraga.." />
 
-    <div id="nav"></div>
-    <router-view />
-    <Home />
-  </w-app>
+  <div id="nav"></div>
+  <router-view />
+  <Home />
 </template>
 <script>
 import getCustomers from "./composables/getCustomers";
-import Home from "./views/Home.vue";
 export default {
-  setup() {
-    const { customers, error, load } = getCustomers();
-    load();
-    return { customers, error };
-  },
+  // setup() {
+  //   const { customers, error, load } = getCustomers();
+  //   load();
+  //   return { customers, error };
+  // },
 };
 </script>
 
@@ -25,6 +23,16 @@ export default {
 header {
   background: crimson;
   height: 100px;
+  margin: -22px;
+}
+input {
+  width: 90%;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 4px;
+  border-color: crimson;
+  font-size: larger;
+  cursor: pointer;
 }
 
 h1 {
@@ -54,5 +62,8 @@ h1 {
       color: #42b983;
     }
   }
+}
+body {
+  background: white;
 }
 </style>
