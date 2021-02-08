@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Customers from "../views/Customers.vue";
+import Customers from "../views/Customer/Customers.vue";
+import CreateCustomer from "../views/Customer/CreateCustomer.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "Customer",
     component: Customers,
+  },
+  {
+    path: "/novi-korisnik",
+    name: "CreateCustomer",
+    component: CreateCustomer,
   },
 ];
 

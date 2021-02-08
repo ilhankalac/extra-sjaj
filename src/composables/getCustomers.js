@@ -7,10 +7,13 @@ const getCustomers = () => {
 
   const load = async () => {
     try {
-      const res = await projectFirestore.collection("customers").get();
+      // TAKING THE ORDERED DATA
+      const res = await projectFirestore
+        .collection("customers")
+        .orderBy("CreationTime", "desc")
+        .get();
       customers.value = res.docs.map((doc) => {
-        console.log(doc.data());
-
+        // console.log(doc.data());
         return { ...doc.data(), id: doc.id };
       });
     } catch (err) {
