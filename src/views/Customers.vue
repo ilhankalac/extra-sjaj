@@ -39,7 +39,7 @@ body {
 
 /* Remove extra left and right margins, due to padding */
 .row {
-  margin: 10px 10px;
+  margin: 10px 18px;
 }
 
 /* Clear floats after the columns */
@@ -64,5 +64,6 @@ body {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+  cursor: pointer;
 }
 </style>
