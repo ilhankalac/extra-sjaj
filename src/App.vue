@@ -3,8 +3,19 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
+<script>
+import getCustomers from "./composables/getCustomers";
+
+export default {
+  setup() {
+    const { customers, error, load } = getCustomers();
+    load();
+    return { customers, error };
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
