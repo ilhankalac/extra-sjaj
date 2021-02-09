@@ -55,7 +55,7 @@
   </div>
 
   <label> Napomena </label>
-  <textarea ref="napomena" rows="10" :value="customer?.Napomena"></textarea>
+  <textarea ref="napomena" rows="10" v-model="customerObj.Napomena"></textarea>
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
@@ -88,6 +88,7 @@ export default {
         Carpets: [""],
         ImePrezime: "",
         BrojTel: "",
+        Napomena: "",
       },
     };
   },
@@ -130,19 +131,19 @@ export default {
       });
     },
     async insertNewCustomer() {
-      const newCustomer = {
+      const fireStoreCustomerObj = {
         ImePrezime: this.customerObj.ImePrezime,
         BrojTel: this.customerObj.BrojTel,
-        Napomena: this.$refs.napomena.value,
+        Napomena: this.customerObj.Napomena,
         CreationTime: Date.now(),
         Carpets: this.customerObj.Carpets.filter((item) => item !== ""),
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
-        !(newCustomer.ImePrezime == null || newCustomer.ImePrezime.trim() === "") &&
-        !(newCustomer.BrojTel == null || newCustomer.BrojTel.trim() === "")
+        !(fireStoreCustomerObj.ImePrezime == null || fireStoreCustomerObj.ImePrezime.trim() === "") &&
+        !(fireStoreCustomerObj.BrojTel == null || fireStoreCustomerObj.BrojTel.trim() === "")
       ) {
-        const res = await projectFirestore.collection("customers").add(newCustomer);
+        const res = await projectFirestore.collection("customers").add(fireStoreCustomerObj);
         this.$router.push("/");
       } else this.insertCheck = false;
     },
