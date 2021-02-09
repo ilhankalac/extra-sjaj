@@ -6,7 +6,6 @@ const getCustomer = () => {
   const error = ref(null);
 
   const loadCustomer = async (id) => {
-    console.log(id);
     try {
       let res = await projectFirestore
         .collection("customers")
@@ -14,7 +13,6 @@ const getCustomer = () => {
         .get();
 
       customer.value = { ...res.data(), id: res.id };
-      console.log(customer.value);
     } catch (err) {
       error.value = err.message;
       console.log(error.value);
