@@ -12,10 +12,10 @@
 
   <label style="font-size:20px">Tepisi</label>
   <div v-if="!customer" class="loader"></div>
-  <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`">
+  <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`" style="display:flex">
     <input
       @blur="makeCorrectInput(customerObj.Carpets[index], index)"
-      style="font-size:30px"
+      style="font-size:30px; margin-left: 5%"
       type="text"
       v-model="customerObj.Carpets[index]"
       placeholder="Unesi veličinu tepiha"
@@ -25,8 +25,8 @@
       @click="addField(customerObj.Carpets)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="24"
-      height="24"
+      width="100"
+      height="100"
       class="ml-2 cursor-pointer"
     >
       <path fill="none" d="M0 0h24v24H0z" />
@@ -42,9 +42,10 @@
       @click="removeField(index)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="24"
-      height="24"
+      width="50"
+      height="50"
       class="ml-2 cursor-pointer"
+      style="margin-top:3%"
     >
       <path fill="none" d="M0 0h24v24H0z" />
       <path
@@ -78,7 +79,10 @@ export default {
     return { customer, error, loadCustomer };
   },
   mounted() {
-    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerObj = this.customer));
+    if (this.id)
+      this.loadCustomer(this.id)
+        .then((item) => (this.customerObj = this.customer))
+        .then(this.totalQuadrature());
   },
   data() {
     return {
@@ -100,8 +104,10 @@ export default {
       fieldType.push("");
     },
     removeField(index) {
-      this.customerObj.Carpets.splice(index, 1);
-      this.totalQuadrature();
+      if (confirm("Da li si siguran da želiš da brišeš odabrani tepih?")) {
+        this.customerObj.Carpets.splice(index, 1);
+        this.totalQuadrature();
+      }
     },
     makeCorrectInput(value, index) {
       if (this.customerObj.Carpets[index] !== undefined) {
@@ -109,6 +115,7 @@ export default {
           .toString()
           .split(" ")
           .filter((item) => item !== "" && item !== "*" && item !== "=");
+
         let length = splittedText[0];
         let width = splittedText[1];
 
