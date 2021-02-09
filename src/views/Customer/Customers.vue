@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="column" v-for="customer in customers" :key="customer.id">
-      <router-link :to="{ name: 'CreateCustomer', params: { id: customer.id } }">
+      <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
         <div class="card">
           <h3>{{ customer?.ImePrezime }}</h3>
           <p>{{ customer?.BrojTel }}</p>

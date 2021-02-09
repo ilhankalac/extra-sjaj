@@ -1,27 +1,26 @@
 import { ref } from "vue";
 import { projectFirestore } from "../firebase/config";
 
-const getCustomers = () => {
-  const customers = ref([]);
+const getCustomer = () => {
+  const customer = ref([]);
   const error = ref(null);
 
-  const load = async (id) => {
+  const loadCustomer = async (id) => {
+    console.log(id);
     try {
-      // TAKING THE ORDERED DATA
-      const res = await projectFirestore
+      let res = await projectFirestore
         .collection("customers")
-        .orderBy("CreationTime", "desc")
+        .doc(id)
         .get();
-      customers.value = res.docs.map((doc) => {
-        // console.log(doc.data());
-        return { ...doc.data(), id: doc.id };
-      });
+
+      customer.value = { ...res.data(), id: res.id };
+      console.log(customer.value);
     } catch (err) {
       error.value = err.message;
       console.log(error.value);
     }
   };
-  return { customers, error, load };
+  return { customer, error, loadCustomer };
 };
 
-export default getCustomers;
+export default getCustomer;

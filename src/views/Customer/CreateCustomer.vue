@@ -5,19 +5,19 @@
   </div>
 
   <br />
-  <label> Ime i prezime {{ id }}</label>
-  <input type="text" ref="firstname" name="firstname" />
+  <label> Ime i prezime </label>
+  <input type="text" :value="customer?.ImePrezime" ref="firstname" name="firstname" />
   <label> Broj telefona</label>
-  <input type="text" ref="phonenumber" name="firstname" />
+  <input type="text" :value="customer?.BrojTel" ref="phonenumber" name="firstname" />
 
   <label style="font-size:20px">Tepisi</label>
 
   <div v-for="(input, index) in customerCarpets" :key="`phoneInput-${index}`">
     <input
-      @blur="makeCorrectInput(carpets[index], index)"
+      @blur="makeCorrectInput(customerCarpets[index], index)"
       style="font-size:30px"
       type="text"
-      v-model="carpets[index]"
+      v-model="customerCarpets[index]"
       placeholder="Unesi veličinu tepiha"
     />
     <!--          Add Svg Icon-->
@@ -54,8 +54,8 @@
     </svg>
   </div>
 
-  <label> Napomena</label>
-  <textarea ref="napomena" rows="10"></textarea>
+  <label> Napomena </label>
+  <textarea ref="napomena" rows="10" :value="customer?.Napomena"></textarea>
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
@@ -65,17 +65,25 @@
 <script>
 import { projectFirestore } from "../../firebase/config";
 import ViewDetails from "./ViewDetails.vue";
+import getCustomer from "../../composables/getCustomer";
+
 export default {
   props: ["id"],
   components: {
     ViewDetails,
   },
   name: "AddRemove",
+  setup() {
+    const { customer, error, loadCustomer } = getCustomer();
+    return { customer, error, loadCustomer };
+  },
+  mounted() {
+    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerCarpets = this.customer.Carpets));
+  },
   data() {
     return {
       insertCheck: true,
-      customerCarpets: [{ phone: "" }],
-      carpets: [],
+      customerCarpets: [{}],
       total: 0,
     };
   },
@@ -88,13 +96,12 @@ export default {
     },
     removeField(index, fieldType) {
       fieldType.splice(index, 1);
-      this.carpets.splice(index, 1);
-      console.log(this.carpets.length);
+      this.customerCarpets.splice(index, 1);
       this.totalQuadrature();
     },
     makeCorrectInput(value, index) {
-      if (this.carpets[index] !== undefined) {
-        let splittedText = this.carpets[index]
+      if (this.customerCarpets[index] !== undefined) {
+        let splittedText = this.customerCarpets[index]
           .toString()
           .split(" ")
           .filter((item) => item !== "" && item !== "*" && item !== "=");
@@ -105,13 +112,13 @@ export default {
         if (width === undefined) width = 1;
 
         let quadrature = Number(length) * Number(width);
-        this.carpets[index] = length + " * " + width + " = " + quadrature;
+        this.customerCarpets[index] = length + " * " + width + " = " + quadrature;
         this.totalQuadrature();
       }
     },
     totalQuadrature() {
       this.total = 0;
-      this.carpets.forEach((val) => {
+      this.customerCarpets.forEach((val) => {
         let currentQuadrature = val.split(" ")[val.split(" ").length - 1];
         this.total += Number(currentQuadrature);
       });
@@ -122,7 +129,7 @@ export default {
         BrojTel: this.$refs.phonenumber.value,
         Napomena: this.$refs.napomena.value,
         CreationTime: Date.now(),
-        Carpets: this.carpets,
+        Carpets: this.customerCarpets,
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
@@ -131,7 +138,6 @@ export default {
       ) {
         const res = await projectFirestore.collection("customers").add(newCustomer);
         this.$router.push("/");
-        this.insertCheck = true;
       } else this.insertCheck = false;
     },
   },
