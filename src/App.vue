@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Extra Sjaj</h1>
+    <!-- <h1>Extra Sjaj</h1> -->
   </header>
   <br />
   <router-view />

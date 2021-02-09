@@ -6,23 +6,23 @@
 
   <br />
   <label> Ime i prezime </label>
-  <input type="text" :value="customer?.ImePrezime" ref="firstname" name="firstname" />
+  <input type="text" v-model="customerObj.ImePrezime" />
   <label> Broj telefona</label>
-  <input type="text" :value="customer?.BrojTel" ref="phonenumber" name="firstname" />
+  <input type="text" v-model="customerObj.BrojTel" />
 
   <label style="font-size:20px">Tepisi</label>
 
-  <div v-for="(input, index) in customerObj?.customerCarpets" :key="`phoneInput-${index}`">
+  <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`">
     <input
-      @blur="makeCorrectInput(customerObj.customerCarpets[index], index)"
+      @blur="makeCorrectInput(customerObj.Carpets[index], index)"
       style="font-size:30px"
       type="text"
-      v-model="customerObj.customerCarpets[index]"
+      v-model="customerObj.Carpets[index]"
       placeholder="Unesi veličinu tepiha"
     />
     <!--          Add Svg Icon-->
     <svg
-      @click="addField(input, customerObj.customerCarpets)"
+      @click="addField(customerObj.Carpets)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="24"
@@ -38,8 +38,8 @@
 
     <!--          Remove Svg Icon-->
     <svg
-      v-show="customerObj.customerCarpets.length > 1"
-      @click="removeField(index, customerObj.customerCarpets)"
+      v-show="customerObj.Carpets.length > 1"
+      @click="removeField(index)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="24"
@@ -78,14 +78,16 @@ export default {
     return { customer, error, loadCustomer };
   },
   mounted() {
-    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerObj.customerCarpets = this.customer.Carpets));
+    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerObj = this.customer));
   },
   data() {
     return {
       insertCheck: true,
       total: 0,
       customerObj: {
-        customerCarpets: [{}],
+        Carpets: [""],
+        ImePrezime: "",
+        BrojTel: "",
       },
     };
   },
@@ -93,17 +95,16 @@ export default {
     returnBack() {
       this.$router.go(-1);
     },
-    addField(value, fieldType) {
-      fieldType.push({ value: "" });
+    addField(fieldType) {
+      fieldType.push("");
     },
-    removeField(index, fieldType) {
-      fieldType.splice(index, 1);
-      this.customerObj.customerCarpets.splice(index, 1);
+    removeField(index) {
+      this.customerObj.Carpets.splice(index, 1);
       this.totalQuadrature();
     },
     makeCorrectInput(value, index) {
-      if (this.customerObj.customerCarpets[index] !== undefined) {
-        let splittedText = this.customerObj.customerCarpets[index]
+      if (this.customerObj.Carpets[index] !== undefined) {
+        let splittedText = this.customerObj.Carpets[index]
           .toString()
           .split(" ")
           .filter((item) => item !== "" && item !== "*" && item !== "=");
@@ -114,24 +115,27 @@ export default {
         if (width === undefined) width = 1;
 
         let quadrature = Number(length) * Number(width);
-        this.customerObj.customerCarpets[index] = length + " * " + width + " = " + quadrature;
+        this.customerObj.Carpets[index] = length + " * " + width + " = " + quadrature.toFixed(2);
         this.totalQuadrature();
       }
     },
     totalQuadrature() {
       this.total = 0;
-      this.customerObj.customerCarpets.forEach((val) => {
-        let currentQuadrature = val.split(" ")[val.split(" ").length - 1];
-        this.total += Number(currentQuadrature);
+      let currentQuadrature = 0;
+      this.customerObj.Carpets.forEach((item) => {
+        if (item !== "") {
+          currentQuadrature = item.split(" ")[item.split(" ").length - 1];
+          this.total += Number(currentQuadrature);
+        }
       });
     },
     async insertNewCustomer() {
       const newCustomer = {
-        ImePrezime: this.$refs.firstname.value,
-        BrojTel: this.$refs.phonenumber.value,
+        ImePrezime: this.customerObj.ImePrezime,
+        BrojTel: this.customerObj.BrojTel,
         Napomena: this.$refs.napomena.value,
         CreationTime: Date.now(),
-        Carpets: this.customerObj.customerCarpets,
+        Carpets: this.customerObj.Carpets.filter((item) => item !== ""),
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
