@@ -5,7 +5,7 @@
   </div>
 
   <br />
-  <label> Ime i prezime</label>
+  <label> Ime i prezime {{ id }}</label>
   <input type="text" ref="firstname" name="firstname" />
   <label> Broj telefona</label>
   <input type="text" ref="phonenumber" name="firstname" />
@@ -66,6 +66,7 @@
 import { projectFirestore } from "../../firebase/config";
 import ViewDetails from "./ViewDetails.vue";
 export default {
+  props: ["id"],
   components: {
     ViewDetails,
   },

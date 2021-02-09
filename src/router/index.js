@@ -9,9 +9,10 @@ const routes = [
     component: Customers,
   },
   {
-    path: "/novi-korisnik",
+    path: "/musterija-:id?",
     name: "CreateCustomer",
     component: CreateCustomer,
+    props: true,
   },
 ];
 
