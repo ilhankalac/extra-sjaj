@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <button @click="returnBack">NAZAD</button>
-    <div style="border: 1px solid black; float: right">
-      <h2>Ukupno: {{ total.toFixed(2) }} eur</h2>
-    </div>
+  <div style="display:flex; justify-content:center; gap: 20%">
+    <button style="margin-left:20px" @click="returnBack">NAZAD</button>
+    <ViewDetails :total="total" />
   </div>
 
   <br />
@@ -17,7 +15,7 @@
   <div v-for="(input, index) in customerCarpets" :key="`phoneInput-${index}`">
     <input
       @blur="makeCorrectInput(carpets[index], index)"
-      style="font-size:50px"
+      style="font-size:30px"
       type="text"
       v-model="carpets[index]"
       placeholder="Unesi veličinu tepiha"
@@ -61,19 +59,22 @@
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-  <button style="width:90%; " @click="insertNewCustomer()">UNESI</button>
+  <button style="width:90%; " @click="insertNewCustomer()">UNESI</button><br /><br />
 </template>
 
 <script>
 import { projectFirestore } from "../../firebase/config";
+import ViewDetails from "./ViewDetails.vue";
 export default {
+  components: {
+    ViewDetails,
+  },
   name: "AddRemove",
   data() {
     return {
       insertCheck: true,
       customerCarpets: [{ phone: "" }],
       carpets: [],
-      finishedInput: false,
       total: 0,
     };
   },
@@ -83,7 +84,6 @@ export default {
     },
     addField(value, fieldType) {
       fieldType.push({ value: "" });
-      this.finishedInput = false;
     },
     removeField(index, fieldType) {
       fieldType.splice(index, 1);
@@ -107,11 +107,8 @@ export default {
         this.carpets[index] = length + " * " + width + " = " + quadrature;
         this.totalQuadrature();
       }
-
-      // if(value.keycode !== )
     },
     totalQuadrature() {
-      console.log(this.carpets.length);
       this.total = 0;
       this.carpets.forEach((val) => {
         let currentQuadrature = val.split(" ")[val.split(" ").length - 1];
@@ -124,18 +121,17 @@ export default {
         BrojTel: this.$refs.phonenumber.value,
         Napomena: this.$refs.napomena.value,
         CreationTime: Date.now(),
+        Carpets: this.carpets,
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
-      console.log(this.customerCarpets);
-      console.log(this.carpets);
-      // if (
-      //   !(newCustomer.ImePrezime == null || newCustomer.ImePrezime.trim() === "") &&
-      //   !(newCustomer.BrojTel == null || newCustomer.BrojTel.trim() === "")
-      // ) {
-      //   const res = await projectFirestore.collection("customers").add(newCustomer);
-      //   this.$router.push("/");
-      //   this.insertCheck = true;
-      // } else this.insertCheck = false;
+      if (
+        !(newCustomer.ImePrezime == null || newCustomer.ImePrezime.trim() === "") &&
+        !(newCustomer.BrojTel == null || newCustomer.BrojTel.trim() === "")
+      ) {
+        const res = await projectFirestore.collection("customers").add(newCustomer);
+        this.$router.push("/");
+        this.insertCheck = true;
+      } else this.insertCheck = false;
     },
   },
 };
