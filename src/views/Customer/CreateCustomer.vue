@@ -12,17 +12,17 @@
 
   <label style="font-size:20px">Tepisi</label>
 
-  <div v-for="(input, index) in customerCarpets" :key="`phoneInput-${index}`">
+  <div v-for="(input, index) in customerObj?.customerCarpets" :key="`phoneInput-${index}`">
     <input
-      @blur="makeCorrectInput(customerCarpets[index], index)"
+      @blur="makeCorrectInput(customerObj.customerCarpets[index], index)"
       style="font-size:30px"
       type="text"
-      v-model="customerCarpets[index]"
+      v-model="customerObj.customerCarpets[index]"
       placeholder="Unesi veličinu tepiha"
     />
     <!--          Add Svg Icon-->
     <svg
-      @click="addField(input, customerCarpets)"
+      @click="addField(input, customerObj.customerCarpets)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="24"
@@ -38,8 +38,8 @@
 
     <!--          Remove Svg Icon-->
     <svg
-      v-show="customerCarpets.length > 1"
-      @click="removeField(index, customerCarpets)"
+      v-show="customerObj.customerCarpets.length > 1"
+      @click="removeField(index, customerObj.customerCarpets)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="24"
@@ -78,13 +78,15 @@ export default {
     return { customer, error, loadCustomer };
   },
   mounted() {
-    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerCarpets = this.customer.Carpets));
+    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerObj.customerCarpets = this.customer.Carpets));
   },
   data() {
     return {
       insertCheck: true,
-      customerCarpets: [{}],
       total: 0,
+      customerObj: {
+        customerCarpets: [{}],
+      },
     };
   },
   methods: {
@@ -96,12 +98,12 @@ export default {
     },
     removeField(index, fieldType) {
       fieldType.splice(index, 1);
-      this.customerCarpets.splice(index, 1);
+      this.customerObj.customerCarpets.splice(index, 1);
       this.totalQuadrature();
     },
     makeCorrectInput(value, index) {
-      if (this.customerCarpets[index] !== undefined) {
-        let splittedText = this.customerCarpets[index]
+      if (this.customerObj.customerCarpets[index] !== undefined) {
+        let splittedText = this.customerObj.customerCarpets[index]
           .toString()
           .split(" ")
           .filter((item) => item !== "" && item !== "*" && item !== "=");
@@ -112,13 +114,13 @@ export default {
         if (width === undefined) width = 1;
 
         let quadrature = Number(length) * Number(width);
-        this.customerCarpets[index] = length + " * " + width + " = " + quadrature;
+        this.customerObj.customerCarpets[index] = length + " * " + width + " = " + quadrature;
         this.totalQuadrature();
       }
     },
     totalQuadrature() {
       this.total = 0;
-      this.customerCarpets.forEach((val) => {
+      this.customerObj.customerCarpets.forEach((val) => {
         let currentQuadrature = val.split(" ")[val.split(" ").length - 1];
         this.total += Number(currentQuadrature);
       });
@@ -129,7 +131,7 @@ export default {
         BrojTel: this.$refs.phonenumber.value,
         Napomena: this.$refs.napomena.value,
         CreationTime: Date.now(),
-        Carpets: this.customerCarpets,
+        Carpets: this.customerObj.customerCarpets,
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
