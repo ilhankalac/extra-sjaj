@@ -11,7 +11,7 @@
   <input type="text" v-model="customerObj.BrojTel" />
 
   <label style="font-size:20px">Tepisi</label>
-  <div v-if="!customerObj.Carpets.length > 0" class="loader"></div>
+  <div v-if="!customer" class="loader"></div>
   <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`">
     <input
       @blur="makeCorrectInput(customerObj.Carpets[index], index)"
@@ -143,7 +143,16 @@ export default {
         !(fireStoreCustomerObj.ImePrezime == null || fireStoreCustomerObj.ImePrezime.trim() === "") &&
         !(fireStoreCustomerObj.BrojTel == null || fireStoreCustomerObj.BrojTel.trim() === "")
       ) {
-        const res = await projectFirestore.collection("customers").add(fireStoreCustomerObj);
+        if (!this.id) {
+          // ADD THE SINGLE DOCUMENT
+          const res = await projectFirestore.collection("customers").add(fireStoreCustomerObj);
+        } else {
+          // UPDATE THE SINGLE DOCUMENT
+          const res = await projectFirestore
+            .collection("customers")
+            .doc(this.id)
+            .update(fireStoreCustomerObj);
+        }
         this.$router.push("/");
       } else this.insertCheck = false;
     },
