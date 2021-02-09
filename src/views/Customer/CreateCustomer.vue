@@ -1,9 +1,61 @@
 <template>
-  <button @click="returnBack">NAZAD</button> <br />
+  <div>
+    <button @click="returnBack">NAZAD</button>
+    <div style="border: 1px solid black; float: right">
+      <h2>Ukupno: {{ total.toFixed(2) }} eur</h2>
+    </div>
+  </div>
+
+  <br />
   <label> Ime i prezime</label>
   <input type="text" ref="firstname" name="firstname" />
   <label> Broj telefona</label>
   <input type="text" ref="phonenumber" name="firstname" />
+
+  <label style="font-size:20px">Tepisi</label>
+
+  <div v-for="(input, index) in customerCarpets" :key="`phoneInput-${index}`">
+    <input
+      @blur="makeCorrectInput(carpets[index], index)"
+      style="font-size:50px"
+      type="text"
+      v-model="carpets[index]"
+      placeholder="Unesi veličinu tepiha"
+    />
+    <!--          Add Svg Icon-->
+    <svg
+      @click="addField(input, customerCarpets)"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      class="ml-2 cursor-pointer"
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path
+        fill="green"
+        d="M11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4zm1 11C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+      />
+    </svg>
+
+    <!--          Remove Svg Icon-->
+    <svg
+      v-show="customerCarpets.length > 1"
+      @click="removeField(index, customerCarpets)"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      class="ml-2 cursor-pointer"
+    >
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path
+        fill="#EC4899"
+        d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"
+      />
+    </svg>
+  </div>
+
   <label> Napomena</label>
   <textarea ref="napomena" rows="10"></textarea>
   <br />
@@ -15,14 +67,56 @@
 <script>
 import { projectFirestore } from "../../firebase/config";
 export default {
+  name: "AddRemove",
   data() {
     return {
       insertCheck: true,
+      customerCarpets: [{ phone: "" }],
+      carpets: [],
+      finishedInput: false,
+      total: 0,
     };
   },
   methods: {
     returnBack() {
       this.$router.go(-1);
+    },
+    addField(value, fieldType) {
+      fieldType.push({ value: "" });
+      this.finishedInput = false;
+    },
+    removeField(index, fieldType) {
+      fieldType.splice(index, 1);
+      this.carpets.splice(index, 1);
+      console.log(this.carpets.length);
+      this.totalQuadrature();
+    },
+    makeCorrectInput(value, index) {
+      if (this.carpets[index] !== undefined) {
+        let splittedText = this.carpets[index]
+          .toString()
+          .split(" ")
+          .filter((item) => item !== "" && item !== "*" && item !== "=");
+        let length = splittedText[0];
+        let width = splittedText[1];
+
+        if (length === undefined) length = 1;
+        if (width === undefined) width = 1;
+
+        let quadrature = Number(length) * Number(width);
+        this.carpets[index] = length + " * " + width + " = " + quadrature;
+        this.totalQuadrature();
+      }
+
+      // if(value.keycode !== )
+    },
+    totalQuadrature() {
+      console.log(this.carpets.length);
+      this.total = 0;
+      this.carpets.forEach((val) => {
+        let currentQuadrature = val.split(" ")[val.split(" ").length - 1];
+        this.total += Number(currentQuadrature);
+      });
     },
     async insertNewCustomer() {
       const newCustomer = {
@@ -32,14 +126,16 @@ export default {
         CreationTime: Date.now(),
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
-      if (
-        !(newCustomer.ImePrezime == null || newCustomer.ImePrezime.trim() === "") &&
-        !(newCustomer.BrojTel == null || newCustomer.BrojTel.trim() === "")
-      ) {
-        const res = await projectFirestore.collection("customers").add(newCustomer);
-        this.$router.push("/");
-        this.insertCheck = true;
-      } else this.insertCheck = false;
+      console.log(this.customerCarpets);
+      console.log(this.carpets);
+      // if (
+      //   !(newCustomer.ImePrezime == null || newCustomer.ImePrezime.trim() === "") &&
+      //   !(newCustomer.BrojTel == null || newCustomer.BrojTel.trim() === "")
+      // ) {
+      //   const res = await projectFirestore.collection("customers").add(newCustomer);
+      //   this.$router.push("/");
+      //   this.insertCheck = true;
+      // } else this.insertCheck = false;
     },
   },
 };
