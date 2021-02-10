@@ -60,7 +60,7 @@
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-  <button style="width:90%; " @click="insertNewCustomer()">UNESI</button><br /><br />
+  <button style="width:90%; " @click="changeNewCustomer()">UNESI</button><br /><br />
 </template>
 
 <script>
@@ -139,15 +139,17 @@ export default {
         }
       });
     },
-    changePayedStatus() {
+    async changePayedStatus() {
       this.customerObj.Placeno = !this.customerObj.Placeno;
+      await this.changeNewCustomer(true);
     },
-    async insertNewCustomer() {
+    async changeNewCustomer(changedPayedStatus = false) {
       const fireStoreCustomerObj = {
         ImePrezime: this.customerObj.ImePrezime,
         BrojTel: this.customerObj.BrojTel,
         Napomena: this.customerObj.Napomena,
-        CreationTime: Date.now(),
+        CreationTime: this.customerObj.CreationTime,
+        LatestUpdate: null,
         Carpets: this.customerObj.Carpets.filter((item) => item !== ""),
         Placeno: this.customerObj.Placeno,
       };
@@ -158,15 +160,18 @@ export default {
       ) {
         if (!this.id) {
           // ADD THE SINGLE DOCUMENT
+          fireStoreCustomerObj.CreationTime = Date.now();
           const res = await projectFirestore.collection("customers").add(fireStoreCustomerObj);
         } else {
           // UPDATE THE SINGLE DOCUMENT
+          fireStoreCustomerObj.LatestUpdate = Date.now();
           const res = await projectFirestore
             .collection("customers")
             .doc(this.id)
             .update(fireStoreCustomerObj);
         }
-        this.$router.push("/");
+        // STAYING IN THE SAME COMPONENT IF USER ONLY UPDATE PAYMENT STATUS
+        if (!changedPayedStatus) this.$router.push("/");
       } else this.insertCheck = false;
     },
   },
