@@ -1,5 +1,5 @@
 <template>
-  <input type="text" id="fname" name="firstname" placeholder="Pretraga.." />
+  <input @keyup="changeSearchValue" type="text" v-model="searchVal" placeholder="Pretraga.." />
 
   <div class="row">
     <div class="column">
@@ -23,6 +23,7 @@
 </template>
 <script>
 import getCustomers from "../../composables/getCustomers";
+import { useStore } from "vuex";
 
 export default {
   name: "Home",
@@ -33,9 +34,18 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
+    const searchVal = store.getters.getSearchVal;
+
+    // REMEMBERING THE SEARCH INPUT IF USER DESTROY THIS COMPONENT
+    function changeSearchValue() {
+      store.commit("changeSearchValue", this.searchVal);
+    }
+
     const { customers, error, load } = getCustomers();
     load();
-    return { customers, error };
+
+    return { customers, error, searchVal, changeSearchValue };
   },
 };
 </script>
