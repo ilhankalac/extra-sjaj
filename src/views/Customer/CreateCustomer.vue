@@ -79,10 +79,10 @@ export default {
     return { customer, error, loadCustomer };
   },
   mounted() {
-    if (this.id)
-      this.loadCustomer(this.id)
-        .then((item) => (this.customerObj = this.customer))
-        .then(this.totalQuadrature());
+    if (this.id) this.loadCustomer(this.id).then((item) => (this.customerObj = this.customer));
+    setInterval(() => {
+      this.totalQuadrature();
+    }, 50);
   },
   data() {
     return {
