@@ -4,7 +4,8 @@
       <h3>
         <b>TOTAL: {{ total.toFixed(2) }} EUR</b> <br />
         <b v-if="!payed">Nije plaćeno</b>
-        <b v-if="payed">Plaćeno</b>
+        <b v-if="payed">Plaćeno</b> <br />
+        <b>Br. tepiha: {{ carpetsNumber }}</b>
       </h3>
       <p></p>
     </div>
@@ -13,7 +14,7 @@
 
 <script>
 export default {
-  props: ["total", "payed"],
+  props: ["total", "payed", "carpetsNumber"],
 };
 </script>
 

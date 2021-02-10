@@ -1,7 +1,7 @@
 <template>
   <div style="display:flex; justify-content:center; gap: 20%">
     <button style="margin-left:20px" @click="returnBack">NAZAD</button>
-    <ViewDetails :total="total" :payed="customerObj?.Placeno" @click="changePayedStatus()" />
+    <ViewDetails :total="total" :payed="customerObj?.Placeno" :carpetsNumber="customerObj?.Carpets.length" @click="changePayedStatus()" />
   </div>
 
   <br />
@@ -63,7 +63,7 @@
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-  <button style="width:90%; " @click="changeNewCustomer()">
+  <button v-if="!customerObj?.Placeno" style="width:90%; " @click="changeNewCustomer()">
     <span v-if="id">PROMENI</span>
     <span v-if="!id">UNESI</span></button
   ><br /><br />
@@ -147,7 +147,7 @@ export default {
     },
     async changePayedStatus() {
       if (confirm("Da li si siguran da je mušterija platio? (odnosno suprotno)")) {
-        this.customer.Placeno = !this.customer.Placeno;
+        this.customerObj.Placeno = !this.customerObj.Placeno;
         await this.changeNewCustomer(true);
       }
     },
