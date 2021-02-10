@@ -23,6 +23,7 @@
     />
     <!--          Add Svg Icon-->
     <svg
+      v-if="!customerObj?.Placeno"
       @click="addField(customerObj.Carpets)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -40,6 +41,7 @@
     <!--          Remove Svg Icon-->
     <svg
       v-show="customerObj.Carpets.length > 1"
+      v-if="!customerObj?.Placeno"
       @click="removeField(index)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -144,8 +146,10 @@ export default {
       });
     },
     async changePayedStatus() {
-      this.customerObj.Placeno = !this.customerObj.Placeno;
-      await this.changeNewCustomer(true);
+      if (confirm("Da li si siguran da je mušterija platio? (odnosno suprotno)")) {
+        this.customer.Placeno = !this.customer.Placeno;
+        await this.changeNewCustomer(true);
+      }
     },
     async changeNewCustomer(changedPayedStatus = false) {
       const fireStoreCustomerObj = {
