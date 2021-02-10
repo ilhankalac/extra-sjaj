@@ -11,7 +11,7 @@
   <input type="text" v-model="customerObj.BrojTel" />
 
   <label style="font-size:20px">Tepisi</label>
-  <div v-if="!customer?.Carpets" class="loader"></div>
+  <div v-if="!customer?.Carpets && id" class="loader"></div>
   <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`" style="display:flex">
     <input
       @blur="makeCorrectInput(customerObj.Carpets[index], index)"
@@ -19,6 +19,7 @@
       type="text"
       v-model="customerObj.Carpets[index]"
       placeholder="Unesi veličinu tepiha"
+      :disabled="customerObj?.Placeno"
     />
     <!--          Add Svg Icon-->
     <svg
@@ -56,11 +57,14 @@
   </div>
 
   <label> Napomena </label>
-  <textarea ref="napomena" rows="10" v-model="customerObj.Napomena"></textarea>
+  <textarea ref="napomena" rows="2" v-model="customerObj.Napomena"></textarea>
   <br />
   <br />
   <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-  <button style="width:90%; " @click="changeNewCustomer()">UNESI</button><br /><br />
+  <button style="width:90%; " @click="changeNewCustomer()">
+    <span v-if="id">PROMENI</span>
+    <span v-if="!id">UNESI</span></button
+  ><br /><br />
 </template>
 
 <script>
@@ -182,7 +186,7 @@ export default {
 .loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #3498db;
+  border-top: 16px solid crimson;
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
