@@ -1,7 +1,7 @@
 <template>
   <div style="display:flex; justify-content:center; gap: 20%">
     <button style="margin-left:20px" @click="returnBack">NAZAD</button>
-    <ViewDetails :total="total" />
+    <ViewDetails :total="total" :payed="customerObj?.Placeno" @click="changePayedStatus()" />
   </div>
 
   <br />
@@ -88,11 +88,13 @@ export default {
     return {
       insertCheck: true,
       total: 0,
+      test: false,
       customerObj: {
         Carpets: [""],
         ImePrezime: "",
         BrojTel: "",
         Napomena: "",
+        Placeno: false,
       },
     };
   },
@@ -137,6 +139,9 @@ export default {
         }
       });
     },
+    changePayedStatus() {
+      this.customerObj.Placeno = !this.customerObj.Placeno;
+    },
     async insertNewCustomer() {
       const fireStoreCustomerObj = {
         ImePrezime: this.customerObj.ImePrezime,
@@ -144,6 +149,7 @@ export default {
         Napomena: this.customerObj.Napomena,
         CreationTime: Date.now(),
         Carpets: this.customerObj.Carpets.filter((item) => item !== ""),
+        Placeno: this.customerObj.Placeno,
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
@@ -196,5 +202,9 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.details {
+  cursor: pointer;
 }
 </style>
