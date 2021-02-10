@@ -13,6 +13,9 @@
         <div class="card">
           <h3>{{ customer?.ImePrezime }}</h3>
           <p>{{ customer?.BrojTel }}</p>
+          <p>
+            <b>{{ customer?.Total.toFixed(2) }} €</b>
+          </p>
         </div>
       </router-link>
     </div>

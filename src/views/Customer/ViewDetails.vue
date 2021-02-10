@@ -2,7 +2,7 @@
   <div :class="{ card: !payed, notpayed: payed }">
     <div class="container">
       <h3>
-        <b>TOTAL: {{ total.toFixed(2) }} EUR</b> <br />
+        <b>TOTAL: {{ total.toFixed(2) }} €</b> <br />
         <b v-if="!payed">Nije plaćeno</b>
         <b v-if="payed">Plaćeno</b> <br />
         <b>Br. tepiha: {{ carpetsNumber }}</b>

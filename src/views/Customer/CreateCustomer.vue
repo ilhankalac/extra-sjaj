@@ -160,6 +160,7 @@ export default {
         LatestUpdate: null,
         Carpets: this.customerObj.Carpets.filter((item) => item !== ""),
         Placeno: this.customerObj.Placeno,
+        Total: this.total,
       };
       // CHECKING IF NAME AND TELEPHONE ARE INPUTED
       if (
