@@ -49,23 +49,23 @@ export default {
   },
   setup() {
     const store = useStore();
-    const searchVal = store.getters.getSearchVal;
-    const search = ref(searchVal);
+    const searchValStore = store.getters.getSearchVal;
+    const search = ref(searchValStore);
 
     // REMEMBERING THE SEARCH INPUT IF USER DESTROY THIS COMPONENT
     function changeSearchValue() {
-      console.log(search.value);
       store.commit("changeSearchValue", search.value);
     }
 
     const { customers, error, load } = getCustomers();
     load();
 
+    // FILTERING THE CUSTOMERS BY THE SEARCH VALUE
     const filteredCustomers = computed(() => {
       return customers.value.filter((item) => item.ImePrezime.toLowerCase().includes(search.value));
     });
 
-    return { customers, error, searchVal, changeSearchValue, filteredCustomers, search };
+    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search };
   },
 };
 </script>
