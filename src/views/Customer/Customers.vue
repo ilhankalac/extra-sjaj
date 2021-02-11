@@ -3,19 +3,27 @@
 
   <div class="row">
     <div class="column">
-      <div class="card" style="background-color: #fff" @click="createNewCustomer()">
+      <div
+        class="card"
+        style="background-color: #fff; color:black; text-shadow: none;
+      "
+        @click="createNewCustomer()"
+      >
         <h3>+</h3>
-        <p>NOVI MUŠTERIJA</p>
+        <p>NOVA MUŠTERIJA</p>
       </div>
     </div>
     <div class="column" v-for="customer in customers" :key="customer.id">
       <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
-        <div class="card">
+        <div :class="{ card: customer?.Placeno, cardPayed: !customer?.Placeno }">
           <h3>{{ customer?.ImePrezime }}</h3>
           <p>{{ customer?.BrojTel }}</p>
           <p>
-            <b>{{ customer?.Total.toFixed(2) }} €</b>
+            Ima <b>{{ customer?.Carpets.length }}</b> tepiha
           </p>
+          <h2>
+            <b>{{ customer?.Total.toFixed(2) }} €</b>
+          </h2>
         </div>
       </router-link>
     </div>
@@ -86,9 +94,23 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
   text-align: center;
-  background-color: #f1f1f1;
+  background-color: #58c475;
   cursor: pointer;
   margin-top: 20px;
+  border-radius: 10px;
+  color: white;
+  text-shadow: 1px 1px black;
+}
+.cardPayed {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: crimson;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: white;
+  text-shadow: 1px 1px black;
 }
 a {
   text-decoration: none;
