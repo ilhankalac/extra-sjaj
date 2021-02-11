@@ -1,5 +1,5 @@
 <template>
-  <input @keyup="changeSearchValue" type="text" v-model="searchVal" placeholder="Pretraga.." />
+  <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraga.." />
 
   <div class="row">
     <div class="column">
@@ -13,7 +13,7 @@
         <p>NOVA MUŠTERIJA</p>
       </div>
     </div>
-    <div class="column" v-for="customer in customers" :key="customer.id">
+    <div class="column" v-for="customer in filteredCustomers" :key="customer.id">
       <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
         <div :class="{ card: customer?.Placeno, cardPayed: !customer?.Placeno }">
           <h3>{{ customer?.ImePrezime }}</h3>
@@ -33,7 +33,7 @@
 <script>
 import getCustomers from "../../composables/getCustomers";
 import { useStore } from "vuex";
-
+import { computed, ref } from "vue";
 export default {
   name: "Home",
   components: {},
@@ -50,16 +50,22 @@ export default {
   setup() {
     const store = useStore();
     const searchVal = store.getters.getSearchVal;
+    const search = ref(searchVal);
 
     // REMEMBERING THE SEARCH INPUT IF USER DESTROY THIS COMPONENT
     function changeSearchValue() {
-      store.commit("changeSearchValue", this.searchVal);
+      console.log(search.value);
+      store.commit("changeSearchValue", search.value);
     }
 
     const { customers, error, load } = getCustomers();
     load();
 
-    return { customers, error, searchVal, changeSearchValue };
+    const filteredCustomers = computed(() => {
+      return customers.value.filter((item) => item.ImePrezime.toLowerCase().includes(search.value));
+    });
+
+    return { customers, error, searchVal, changeSearchValue, filteredCustomers, search };
   },
 };
 </script>
