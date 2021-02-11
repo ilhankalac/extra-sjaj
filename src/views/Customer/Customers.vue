@@ -13,6 +13,8 @@
   </div>
 
   <div class="row">
+    <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
+
     <div class="column">
       <div
         class="card"
@@ -152,5 +154,30 @@ a {
   display: flex;
   gap: 5px;
   margin: 2%;
+}
+
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active,
+.accordion:hover {
+  background-color: #ccc;
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
 }
 </style>
