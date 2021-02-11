@@ -1,5 +1,16 @@
 <template>
-  <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraga.." />
+  <div class="buttonIn">
+    <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraga.." />
+    <button
+      id="clear"
+      @click="
+        search = '';
+        changeSearchValue();
+      "
+    >
+      RESET
+    </button>
+  </div>
 
   <div class="row">
     <div class="column">
@@ -136,5 +147,10 @@ body {
 a {
   text-decoration: none;
   color: black;
+}
+.buttonIn {
+  display: flex;
+  gap: 5px;
+  margin: 2%;
 }
 </style>
