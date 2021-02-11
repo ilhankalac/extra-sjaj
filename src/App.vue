@@ -1,6 +1,8 @@
 <template>
   <header>
-    <h1>Extra Sjaj</h1>
+    <router-link :to="{ name: 'LoginForm' }">
+      <h1>Extra Sjaj</h1>
+    </router-link>
   </header>
   <br />
   <router-view />
