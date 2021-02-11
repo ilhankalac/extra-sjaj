@@ -10,6 +10,7 @@
 <script>
 import { ref } from "vue";
 import useLogin from "../composables/useLogin";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -17,12 +18,17 @@ export default {
     const password = ref("");
 
     const { error, login } = useLogin();
+    const router = useRouter();
 
     const handleSubmit = async () => {
       console.log(email.value, password.value);
       await login(email.value, password.value);
 
-      if (!error.value) console.log("Korisnik je uspjesno prijavljen!");
+      if (!error.value) {
+        console.log("Korisnik je uspjesno prijavljen!");
+        console.log(router);
+        router.push({ name: "Customer" });
+      }
     };
 
     return { email, password, handleSubmit, error };
