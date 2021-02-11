@@ -62,7 +62,16 @@ export default {
 
     // FILTERING THE CUSTOMERS BY THE SEARCH VALUE
     const filteredCustomers = computed(() => {
-      return customers.value.filter((item) => item.ImePrezime.toLowerCase().includes(search.value));
+      return customers.value.filter(
+        (item) =>
+          item.ImePrezime.toLowerCase().includes(search.value) ||
+          item.BrojTel.toLowerCase().includes(search.value) ||
+          item.Total.toString().includes(search.value) ||
+          new Date(item.CreationTime)
+            .toString()
+            .toLowerCase()
+            .includes(search.value)
+      );
     });
 
     return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search };
