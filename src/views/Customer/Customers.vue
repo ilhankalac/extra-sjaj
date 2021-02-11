@@ -24,6 +24,7 @@
           <h2>
             <b>{{ customer?.Total.toFixed(2) }} €</b>
           </h2>
+          <p>{{ dateFormat(customer?.CreationTime) }}</p>
         </div>
       </router-link>
     </div>
@@ -39,6 +40,11 @@ export default {
   methods: {
     createNewCustomer() {
       this.$router.push({ name: "CreateCustomer" });
+    },
+
+    dateFormat(date) {
+      let formatedDate = new Date(date).toString();
+      return formatedDate.substring(4, 21);
     },
   },
   setup() {
