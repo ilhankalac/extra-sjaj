@@ -19,7 +19,7 @@ jobs:
           node-version: "12"
       - run: npm install
       # - run: npm test
-      - run: npx ng build --prod
+      - run: npx npm run build --prod || true
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
