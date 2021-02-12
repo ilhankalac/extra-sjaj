@@ -1,6 +1,6 @@
 <template>
   <div class="buttonIn">
-    <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraga.." />
+    <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraži..." />
     <button
       id="clear"
       @click="
@@ -8,7 +8,9 @@
         changeSearchValue();
       "
     >
-      X
+      <span class="material-icons">
+        clear
+      </span>
     </button>
   </div>
 
@@ -22,7 +24,11 @@
       "
         @click="createNewCustomer()"
       >
-        <h3>+</h3>
+        <h3>
+          <span class="material-icons">
+            library_add_check
+          </span>
+        </h3>
         <p>NOVA MUŠTERIJA</p>
       </div>
     </div>
@@ -75,15 +81,16 @@ export default {
 
     // FILTERING THE CUSTOMERS BY THE SEARCH VALUE
     const filteredCustomers = computed(() => {
+      let searchToLowerCase = search.value.toLowerCase();
       return customers.value.filter(
         (item) =>
-          item.ImePrezime.toLowerCase().includes(search.value) ||
-          item.BrojTel.toLowerCase().includes(search.value) ||
-          item.Total.toString().includes(search.value) ||
+          item.ImePrezime.toLowerCase().includes(searchToLowerCase) ||
+          item.BrojTel.toLowerCase().includes(searchToLowerCase) ||
+          item.Total.toString().includes(searchToLowerCase) ||
           new Date(item.CreationTime)
             .toString()
             .toLowerCase()
-            .includes(search.value)
+            .includes(searchToLowerCase)
       );
     });
 

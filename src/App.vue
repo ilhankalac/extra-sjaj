@@ -3,7 +3,11 @@
     <h1 style="text-align:left">Extra Sjaj</h1>
     <div class="header-section">
       <p style="padding-top:20px; color: white">{{ user?.email }}</p>
-      <button v-if="user" @click="handleClick" style="border: 1px solid">Odjava</button>
+      <button v-if="user" @click="handleClick" style="border: 1px solid">
+        <span class="material-icons">
+          logout
+        </span>
+      </button>
     </div>
   </header>
   <br />
@@ -45,7 +49,7 @@ h1 {
 }
 header {
   background: crimson;
-  height: 130px;
+  height: 140px;
   position: sticky;
   margin-top: -21px;
   display: flex;
