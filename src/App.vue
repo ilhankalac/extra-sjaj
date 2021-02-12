@@ -45,7 +45,7 @@ h1 {
 }
 header {
   background: crimson;
-  height: 150px;
+  height: 130px;
   position: sticky;
   margin-top: -21px;
   display: flex;
