@@ -1,6 +1,10 @@
 <template>
   <div style="display:flex; justify-content:center; gap: 20%">
-    <button style="margin-left:20px" @click="returnBack">NAZAD</button>
+    <button style="margin-left:20px" @click="returnBack">
+      <span class="material-icons">
+        arrow_back
+      </span>
+    </button>
     <ViewDetails :total="total" :payed="customerObj?.Placeno" :carpetsNumber="customerObj?.Carpets.length" @click="changePayedStatus()" />
   </div>
 

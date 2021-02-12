@@ -2,7 +2,6 @@
   <div class="topnav">
     <a class="active">Tepisi</a>
     <a>Statistika</a>
-    <a>Tepisi</a>
     <a v-if="user" @click="handleClick" style="float:right">
       <span class="material-icons">
         logout
