@@ -1,8 +1,9 @@
 <template>
   <header>
-    <div style="display:flex">
-      <h1>Extra Sjaj</h1>
-      <button style="background-color: white; color: black; margin-top:30px; margin-right: 10px" @click="handleClick">Odjava</button>
+    <h1 style="text-align:left">Extra Sjaj</h1>
+    <div class="header-section">
+      <p style="padding-top:20px; color: white">{{ user?.email }}</p>
+      <button v-if="user" @click="handleClick" style="border: 1px solid">Odjava</button>
     </div>
   </header>
   <br />
@@ -11,6 +12,7 @@
 <script>
 import Customers from "./views/Customer/Customers.vue";
 import useLogout from "./composables/useLogout";
+import getUser from "./composables/getUser";
 import { useRouter } from "vue-router";
 
 export default {
@@ -20,26 +22,19 @@ export default {
   setup() {
     const { logout, error } = useLogout();
     const router = useRouter();
+    const { user } = getUser();
 
     const handleClick = async () => {
-      console.log("dada");
       await logout();
       router.push({ name: "LoginForm" });
     };
 
-    return { handleClick };
+    return { handleClick, user };
   },
 };
 </script>
 
 <style lang="scss">
-header {
-  background: crimson;
-  height: 100px;
-  position: sticky;
-  margin-top: -21px;
-}
-
 h1 {
   height: 100%;
   width: 100%;
@@ -48,6 +43,14 @@ h1 {
   justify-content: center;
   color: #f8f8ff;
 }
+header {
+  background: crimson;
+  height: 150px;
+  position: sticky;
+  margin-top: -21px;
+  display: flex;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

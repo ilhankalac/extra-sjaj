@@ -21,12 +21,11 @@ export default {
     const router = useRouter();
 
     const handleSubmit = async () => {
-      console.log(email.value, password.value);
+      // console.log(email.value, password.value);
       await login(email.value, password.value);
 
       if (!error.value) {
-        console.log("Korisnik je uspjesno prijavljen!");
-        console.log(router);
+        // console.log("Korisnik je uspjesno prijavljen!");
         router.push({ name: "Customer" });
       }
     };
