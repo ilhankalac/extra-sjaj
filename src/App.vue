@@ -1,15 +1,16 @@
 <template>
-  <header>
-    <h1 style="text-align:left">Extra Sjaj</h1>
-    <div class="header-section">
-      <p style="padding-top:20px; color: white">{{ user?.email }}</p>
-      <button v-if="user" @click="handleClick" style="border: 1px solid">
-        <span class="material-icons">
-          logout
-        </span>
-      </button>
-    </div>
-  </header>
+  <div class="topnav">
+    <a class="active">Tepisi</a>
+    <a>Statistika</a>
+    <a>Tepisi</a>
+    <a v-if="user" @click="handleClick" style="float:right">
+      <span class="material-icons">
+        logout
+      </span>
+    </a>
+    <!-- <p style="padding-top:20px; color: white">{{ user?.email }}</p> -->
+  </div>
+
   <br />
   <router-view />
 </template>
@@ -39,20 +40,32 @@ export default {
 </script>
 
 <style lang="scss">
-h1 {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #f8f8ff;
+.topnav {
+  background-color: crimson;
+  overflow: hidden;
 }
-header {
-  background: crimson;
-  height: 140px;
-  position: sticky;
-  margin-top: -21px;
-  display: flex;
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  height: 25px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4caf50;
+  color: white;
 }
 
 #app {

@@ -12,6 +12,9 @@
         clear
       </span>
     </button>
+    <span style="font-size:50px; cursor:pointer" class="material-icons">
+      manage_search
+    </span>
   </div>
 
   <div class="row">
