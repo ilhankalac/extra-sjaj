@@ -6,10 +6,11 @@ import { projectAuth } from "../firebase/config";
 
 // auth guard
 const requireAuth = (to, from, next) => {
-  let user = projectAuth.currentUser;
-  console.log("Current user in guard", user);
-  if (!user) next({ name: "LoginForm" });
-  next();
+  // CHECKING IF THE USER IS ALREADY LOGGED IN (FOR RELOADING PAGES)
+  projectAuth.onAuthStateChanged(function(user) {
+    if (!user) next({ name: "LoginForm" });
+    next();
+  });
 };
 
 const routes = [
@@ -27,7 +28,7 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/registracija",
+    path: "/prijava",
     name: "LoginForm",
     component: LoginForm,
   },
