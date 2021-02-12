@@ -8,7 +8,7 @@
         changeSearchValue();
       "
     >
-      RESET
+      X
     </button>
   </div>
 
