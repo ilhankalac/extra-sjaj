@@ -9,7 +9,7 @@ const requireAuth = (to, from, next) => {
   // CHECKING IF THE USER IS ALREADY LOGGED IN (FOR RELOADING PAGES)
   projectAuth.onAuthStateChanged(function(user) {
     if (!user) next({ name: "LoginForm" });
-    next();
+    else next();
   });
 };
 

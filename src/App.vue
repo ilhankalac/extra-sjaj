@@ -1,17 +1,33 @@
 <template>
   <header>
-    <router-link :to="{ name: 'LoginForm' }">
+    <div style="display:flex">
       <h1>Extra Sjaj</h1>
-    </router-link>
+      <button style="background-color: white; color: black; margin-top:30px; margin-right: 10px" @click="handleClick">Odjava</button>
+    </div>
   </header>
   <br />
   <router-view />
 </template>
 <script>
 import Customers from "./views/Customer/Customers.vue";
+import useLogout from "./composables/useLogout";
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     Customers,
+  },
+  setup() {
+    const { logout, error } = useLogout();
+    const router = useRouter();
+
+    const handleClick = async () => {
+      console.log("dada");
+      await logout();
+      router.push({ name: "LoginForm" });
+    };
+
+    return { handleClick };
   },
 };
 </script>
@@ -25,7 +41,7 @@ header {
 }
 
 h1 {
-  height: 90%;
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
