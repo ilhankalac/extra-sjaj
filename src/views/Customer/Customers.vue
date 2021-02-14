@@ -17,38 +17,36 @@
     </span>
   </div>
 
-  <div class="row">
-    <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
-    <div class="flex flex-wrap ">
-      <div
-        class="w-72   m-3 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
-        @click="createNewCustomer()"
-      >
-        <div class="p-8 ">
-          <h3>
-            <span class="material-icons">
-              library_add_check
-            </span>
-          </h3>
-          <p class="m-y-50">NOVA MUŠTERIJA</p>
-        </div>
+  <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
+  <div class="flex flex-wrap justify-center">
+    <div
+      class="w-72 m-3 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
+      @click="createNewCustomer()"
+    >
+      <div class="p-8 ">
+        <h3>
+          <span class="material-icons">
+            library_add_check
+          </span>
+        </h3>
+        <p class="m-y-50">NOVA MUŠTERIJA</p>
       </div>
-      <div class="w-72 m-3 bg-green-300 hover:bg-green-500 rounded-xl shadow-md text-white" v-for="customer in filteredCustomers" :key="customer.id">
-        <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
-          <div>
-            <div class="p-8 ">
-              <div class="uppercase tracking-wide text-sm font-semibold">{{ customer?.ImePrezime }}</div>
-              <p class="block text-white mt-1 text-lg leading-tight font-medium">{{ dateFormat(customer?.CreationTime) }}</p>
-              <p class="mt-2 text-gray-500">
-                {{ customer?.BrojTel }}
-              </p>
-              <p class="mt-2 text-gray-500">
-                Ima <b>{{ customer?.Carpets.length }}</b> tepiha
-              </p>
-            </div>
+    </div>
+    <div class="w-72 m-3 bg-green-300 hover:bg-green-500 rounded-xl shadow-md text-white" v-for="customer in filteredCustomers" :key="customer.id">
+      <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
+        <div>
+          <div class="p-8 ">
+            <div class="uppercase tracking-wide text-sm font-semibold">{{ customer?.ImePrezime }}</div>
+            <p class="block text-white mt-1 text-lg leading-tight font-medium">{{ dateFormat(customer?.CreationTime) }}</p>
+            <p class="mt-2 text-gray-500">
+              {{ customer?.BrojTel }}
+            </p>
+            <p class="mt-2 text-gray-500">
+              Ima <b>{{ customer?.Carpets.length }}</b> tepiha
+            </p>
           </div>
-        </router-link>
-      </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
