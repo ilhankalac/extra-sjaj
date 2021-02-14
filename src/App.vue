@@ -7,10 +7,12 @@
         logout
       </span>
     </a>
+    <br />
+    <br />
+    <br />
     <!-- <p style="padding-top:20px; color: white">{{ user?.email }}</p> -->
   </div>
 
-  <br />
   <router-view />
 </template>
 <script>
@@ -52,7 +54,7 @@ export default {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  height: 25px;
+  height: 72px;
 }
 
 /* Change the color of links on hover */
