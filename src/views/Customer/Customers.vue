@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraži..." />
+    <input class="text-4xl m-5" @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraži..." />
     <button
       id="clear"
       @click="
@@ -8,42 +8,48 @@
         changeSearchValue();
       "
     >
-      <span class="material-icons">
+      <span class="material-icons text-4xl">
         clear
       </span>
     </button>
-    <span style="font-size:50px; cursor:pointer" class="material-icons">
+    <!-- <span style="font-size:50px; cursor:pointer" class="material-icons">
       manage_search
-    </span>
+    </span> -->
   </div>
 
   <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
-  <div class="flex flex-wrap justify-center">
+  <div class="flex flex-wrap justify-center" style=" text-shadow: 1px 1px black;">
     <div
-      class="w-72 m-3 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
+      class="w-72 m-2 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
       @click="createNewCustomer()"
     >
-      <div class="p-8 ">
+      <div class="flex items-center justify-center h-full">
         <h3>
           <span class="material-icons">
             library_add_check
           </span>
         </h3>
-        <p class="m-y-50">NOVA MUŠTERIJA</p>
+        <p class="m-y-50">&nbsp; NOVA MUŠTERIJA</p>
       </div>
     </div>
-    <div class="w-72 m-3 bg-green-300 hover:bg-green-500 rounded-xl shadow-md text-white" v-for="customer in filteredCustomers" :key="customer.id">
+    <div class="w-72 m-2 bg-green-500 hover:bg-green-600 rounded-xl shadow-md text-white" v-for="customer in filteredCustomers" :key="customer.id">
       <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
         <div>
           <div class="p-8 ">
-            <div class="uppercase tracking-wide text-sm font-semibold">{{ customer?.ImePrezime }}</div>
-            <p class="block text-white mt-1 text-lg leading-tight font-medium">{{ dateFormat(customer?.CreationTime) }}</p>
-            <p class="mt-2 text-gray-500">
-              {{ customer?.BrojTel }}
+            <p class="block mt-1 text-2xl leading-tight font-medium ">
+              {{ customer?.ImePrezime }}
             </p>
-            <p class="mt-2 text-gray-500">
+            <div class="uppercase tracking-wide text-sm font-semibold">
+              {{ customer?.BrojTel }}
+            </div>
+            <p class="mt-2 ">
+              {{ dateFormat(customer?.CreationTime) }}
+            </p>
+            <p class="mt-2">
               Ima <b>{{ customer?.Carpets.length }}</b> tepiha
             </p>
+            <hr class="m-2" />
+            <p class="text-3xl">{{ customer?.Total.toFixed(2) }}€</p>
           </div>
         </div>
       </router-link>
@@ -124,14 +130,6 @@ body {
   clear: both;
 }
 
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-
 a {
   text-decoration: none;
 }
@@ -139,19 +137,6 @@ a {
   display: flex;
   gap: 5px;
   margin: 2%;
-}
-
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
 }
 
 .active,

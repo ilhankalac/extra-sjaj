@@ -1,7 +1,7 @@
 <template>
   <div class="h-20 bg-red-600 flex justify-between items-center ">
     <div class="space-x-5 ml-8">
-      <button class="btn hover:bg-red-700 text-white text-lg font-bold  ">Tepisi</button>
+      <button class="btn hover:bg-red-700 text-white text-lg font-bold">Tepisi</button>
       <button class="btn hover:bg-red-700  text-white text-lg font-bold">Statistika</button>
     </div>
     <div class="flex flex-col text-white ">
@@ -64,9 +64,7 @@ input {
   padding: 10px;
   border: 0;
   border-bottom: 1px solid #ddd;
-  width: 90%;
-  box-sizing: border-box;
-  font-size: 30px;
+  width: 50%;
 }
 button {
   background-color: crimson;
