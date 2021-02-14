@@ -20,7 +20,10 @@
   <div class="row">
     <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
     <div class="flex flex-wrap ">
-      <div class="w-72   m-3 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl ">
+      <div
+        class="w-72   m-3 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
+        @click="createNewCustomer()"
+      >
         <div class="p-8 ">
           <h3>
             <span class="material-icons">

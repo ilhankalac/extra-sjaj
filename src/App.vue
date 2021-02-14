@@ -1,18 +1,18 @@
 <template>
-  <div class="topnav">
-    <a class="active">Tepisi</a>
-    <a>Statistika</a>
-    <a v-if="user" @click="handleClick" style="float:right">
-      <span class="material-icons">
-        logout
-      </span>
-    </a>
-    <br />
-    <br />
-    <br />
-    <!-- <p style="padding-top:20px; color: white">{{ user?.email }}</p> -->
+  <div class="h-20 bg-red-600 flex justify-between items-center ">
+    <div class="space-x-5 ml-8">
+      <button class="btn hover:bg-red-700 text-white text-lg font-bold  ">Tepisi</button>
+      <button class="btn hover:bg-red-700  text-white text-lg font-bold">Statistika</button>
+    </div>
+    <div class="flex flex-col text-white ">
+      <a class="btn text-lg font-bold  float-right cursor-pointer" v-if="user" @click="handleClick">
+        <span class="material-icons">
+          logout
+        </span>
+      </a>
+      <p>{{ user?.email }}</p>
+    </div>
   </div>
-
   <router-view />
 </template>
 <script>
@@ -41,58 +41,15 @@ export default {
 </script>
 
 <style>
-.topnav {
-  background-color: crimson;
-  overflow: hidden;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  height: 72px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
 /* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #4caf50;
-  color: white;
-}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  padding: 10px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-body {
-  margin: 0;
-  background: white;
-}
 label {
   display: block;
   color: #bbb;
