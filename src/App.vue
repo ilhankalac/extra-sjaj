@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .topnav {
   background-color: crimson;
   overflow: hidden;
