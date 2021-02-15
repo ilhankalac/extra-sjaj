@@ -12,9 +12,6 @@
         clear
       </span>
     </button>
-    <!-- <span style="font-size:50px; cursor:pointer" class="material-icons">
-      manage_search
-    </span> -->
   </div>
 
   <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
@@ -32,7 +29,15 @@
         <p class="m-y-50">&nbsp; NOVA MUŠTERIJA</p>
       </div>
     </div>
-    <div class="w-72 m-2 bg-green-500 hover:bg-green-600 rounded-xl shadow-md text-white" v-for="customer in filteredCustomers" :key="customer.id">
+    <!-- class="w-72 m-2 bg-green-500 hover:bg-green-600 rounded-xl shadow-md text-white"  -->
+    <div
+      v-for="customer in filteredCustomers"
+      :key="customer.id"
+      :class="{
+        'w-72 m-2 bg-green-500 hover:bg-green-600 rounded-xl shadow-md text-white': customer?.Placeno,
+        'w-72 m-2 bg-red-500 hover:bg-red-600 rounded-xl shadow-md text-white': !customer?.Placeno,
+      }"
+    >
       <router-link :to="{ name: 'CreateCustomer', params: { id: customer?.id } }">
         <div>
           <div class="p-8 ">
