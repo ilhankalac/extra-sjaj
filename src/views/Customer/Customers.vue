@@ -21,8 +21,11 @@
         <li @click="createNewCustomer()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
           <span class="material-icons"> library_add_check </span> Nova mušterija
         </li>
-        <li @click="filterDebtors()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
-          <span class="material-icons"> attach_money </span>Prikaži dužnike
+        <li @click="changeDebtBool()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
+          <span class="material-icons"> attach_money </span>
+          <span>
+            Prikaži dužnike
+          </span>
         </li>
       </ul>
     </div>
@@ -79,6 +82,7 @@ export default {
     const store = useStore();
     const searchValStore = store.getters.getSearchVal;
     const search = ref(searchValStore);
+    const showDebtors = ref(false);
 
     // REMEMBERING THE SEARCH INPUT IF USER DESTROY THIS COMPONENT
     function changeSearchValue() {
@@ -91,7 +95,7 @@ export default {
     // FILTERING THE CUSTOMERS BY THE SEARCH VALUE
     const filteredCustomers = computed(() => {
       let searchToLowerCase = search.value.toLowerCase();
-      return customers.value.filter(
+      let filtered = customers.value.filter(
         (item) =>
           item.ImePrezime.toLowerCase().includes(searchToLowerCase) ||
           item.BrojTel.toLowerCase().includes(searchToLowerCase) ||
@@ -101,9 +105,15 @@ export default {
             .toLowerCase()
             .includes(searchToLowerCase)
       );
+      if (showDebtors.value) filtered = filtered.filter((item) => !item.Placeno);
+      return filtered;
     });
 
-    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search };
+    const changeDebtBool = () => {
+      showDebtors.value = !showDebtors.value;
+    };
+
+    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search, changeDebtBool };
   },
 };
 </script>
