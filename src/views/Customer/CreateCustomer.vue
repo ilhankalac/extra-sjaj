@@ -69,7 +69,7 @@
     <label> Napomena </label>
     <textarea ref="napomena" rows="2" v-model="customerObj.Napomena"></textarea>
     <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-    <button v-if="!customerObj?.Placeno" class="bg-red-600 hover:bg-red-700  w-36 h-14 text-white font-bold" @click="changeNewCustomer()">
+    <button v-if="!customerObj?.Placeno" class="bg-red-600 hover:bg-red-700  w-48 h-14 text-white font-bold" @click="changeNewCustomer()">
       <span v-if="id">PROMENI</span>
       <span v-if="!id">UNESI</span>
     </button>

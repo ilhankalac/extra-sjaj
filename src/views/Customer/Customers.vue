@@ -30,6 +30,8 @@
         </li>
         <li @click="test" class="flex  gap-3 hover:bg-gray-500 rounded-2xl"><span class="material-icons"> archive </span> Arhivirano</li>
       </ul>
+      <hr class="mx-10  " />
+      <p class="text-3xl">Total: {{ totalSum().toFixed(2) }} €</p>
     </div>
 
     <div
@@ -115,7 +117,13 @@ export default {
       showDebtors.value = !showDebtors.value;
     };
 
-    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search, changeDebtBool, showDebtors };
+    function totalSum() {
+      let sum = 0;
+      filteredCustomers.value.forEach((item) => (sum += item.Total));
+      return sum;
+    }
+
+    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search, changeDebtBool, showDebtors, totalSum };
   },
 };
 </script>
