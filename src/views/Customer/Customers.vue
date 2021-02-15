@@ -15,7 +15,7 @@
   </div>
 
   <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
-  <div class="flex flex-wrap justify-center" style=" text-shadow: 1px 1px black;">
+  <div class="flex flex-wrap justify-center " style=" text-shadow: 1px 1px black;">
     <div class="w-72 m-2 max-w-md bg-gray-400  rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl">
       <ul class="text-2xl m-3">
         <li @click="createNewCustomer()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
@@ -28,6 +28,7 @@
           </span>
           <span v-else> Svi</span>
         </li>
+        <li @click="test" class="flex  gap-3 hover:bg-gray-500 rounded-2xl"><span class="material-icons"> archive </span> Arhivirano</li>
       </ul>
     </div>
 
