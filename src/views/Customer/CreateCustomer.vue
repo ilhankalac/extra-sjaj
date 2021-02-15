@@ -1,76 +1,73 @@
 <template>
-  <div style="display:flex; justify-content:center; gap: 20%">
-    <button style="margin-left:20px" @click="returnBack">
+  <div class="flex justify-between m-3">
+    <button class="bg-red-600 hover:bg-red-700  w-20" @click="returnBack">
       <span class="material-icons">
         arrow_back
       </span>
     </button>
     <ViewDetails :total="total" :payed="customerObj?.Placeno" :carpetsNumber="customerObj?.Carpets.length" @click="changePayedStatus()" />
   </div>
+  <div class="lg:mx-64 text-4xl sm:mx-10">
+    <label> Ime i prezime </label>
+    <input type="text" v-model="customerObj.ImePrezime" />
+    <label> Broj telefona</label>
+    <input type="text" v-model="customerObj.BrojTel" />
 
-  <br />
-  <label> Ime i prezime </label>
-  <input type="text" v-model="customerObj.ImePrezime" />
-  <label> Broj telefona</label>
-  <input type="text" v-model="customerObj.BrojTel" />
-
-  <label style="font-size:20px">Tepisi</label>
-  <div v-if="!customer?.Carpets && id" class="loader"></div>
-  <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`" style="display:flex">
-    <input
-      @blur="makeCorrectInput(customerObj.Carpets[index], index)"
-      style="font-size:30px; margin-left: 5%"
-      type="text"
-      v-model="customerObj.Carpets[index]"
-      placeholder="Unesi veličinu tepiha"
-      :disabled="customerObj?.Placeno"
-    />
-    <!--          Add Svg Icon-->
-    <svg
-      v-if="!customerObj?.Placeno"
-      @click="addField(customerObj.Carpets)"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="100"
-      height="100"
-      class="ml-2 cursor-pointer"
-    >
-      <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        fill="green"
-        d="M11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4zm1 11C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+    <label style="font-size:20px">Tepisi</label>
+    <div v-if="!customer?.Carpets && id" class="loader"></div>
+    <div v-for="(input, index) in customerObj?.Carpets" :key="`phoneInput-${index}`" style="display:flex">
+      <input
+        @blur="makeCorrectInput(customerObj.Carpets[index], index)"
+        type="text"
+        v-model="customerObj.Carpets[index]"
+        placeholder="Unesi veličinu tepiha"
+        :disabled="customerObj?.Placeno"
       />
-    </svg>
+      <!--          Add Svg Icon-->
+      <svg
+        v-if="!customerObj?.Placeno"
+        @click="addField(customerObj.Carpets)"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="100"
+        height="100"
+        class="ml-2 cursor-pointer"
+      >
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          fill="green"
+          d="M11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4zm1 11C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+        />
+      </svg>
 
-    <!--          Remove Svg Icon-->
-    <svg
-      v-show="customerObj.Carpets.length > 1"
-      v-if="!customerObj?.Placeno"
-      @click="removeField(index)"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="50"
-      height="50"
-      class="ml-2 cursor-pointer"
-      style="margin-top:3%"
-    >
-      <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        fill="#EC4899"
-        d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"
-      />
-    </svg>
+      <!--          Remove Svg Icon-->
+      <svg
+        v-show="customerObj.Carpets.length > 1"
+        v-if="!customerObj?.Placeno"
+        @click="removeField(index)"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="50"
+        height="50"
+        class="ml-2 cursor-pointer"
+        style="margin-top:3%"
+      >
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          fill="#EC4899"
+          d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z"
+        />
+      </svg>
+    </div>
+
+    <label> Napomena </label>
+    <textarea ref="napomena" rows="2" v-model="customerObj.Napomena"></textarea>
+    <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
+    <button v-if="!customerObj?.Placeno" class="bg-red-600 hover:bg-red-700  w-36 h-14 text-white font-bold" @click="changeNewCustomer()">
+      <span v-if="id">PROMENI</span>
+      <span v-if="!id">UNESI</span>
+    </button>
   </div>
-
-  <label> Napomena </label>
-  <textarea ref="napomena" rows="2" v-model="customerObj.Napomena"></textarea>
-  <br />
-  <br />
-  <h2 v-if="!insertCheck" style="color:crimson">Morate uneti sve podatke!</h2>
-  <button v-if="!customerObj?.Placeno" style="width:90%; " @click="changeNewCustomer()">
-    <span v-if="id">PROMENI</span>
-    <span v-if="!id">UNESI</span></button
-  ><br /><br />
 </template>
 
 <script>
@@ -220,9 +217,5 @@ export default {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.details {
-  cursor: pointer;
 }
 </style>
