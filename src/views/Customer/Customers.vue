@@ -106,48 +106,7 @@ export default {
 };
 </script>
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-family: Arial, Helvetica, sans-serif;
-}
-
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-
-.row {
-  margin: 10px 18px;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-a {
-  text-decoration: none;
-}
-.buttonIn {
-  display: flex;
-  gap: 5px;
-  margin: 2%;
-}
-
-.active,
-.accordion:hover {
-  background-color: #ccc;
-}
-
-.panel {
-  padding: 0 18px;
-  display: none;
-  background-color: white;
-  overflow: hidden;
 }
 </style>
