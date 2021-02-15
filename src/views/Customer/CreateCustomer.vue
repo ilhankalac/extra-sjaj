@@ -13,7 +13,7 @@
       @click="changePayedStatus()"
     />
   </div>
-  <div class="lg:mx-64 text-4xl sm:mx-10">
+  <div class="lg:mx-64 lg:text-4xl sm:text-2xl sm:mx-10">
     <label> Ime i prezime </label>
     <input type="text" v-model="customerObj.ImePrezime" />
     <label> Broj telefona</label>
