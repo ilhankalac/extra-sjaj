@@ -64,7 +64,7 @@ input {
   padding: 10px;
   border: 0;
   border-bottom: 1px solid #ddd;
-  width: 50%;
+  width: 100%;
 }
 button {
   background-color: crimson;

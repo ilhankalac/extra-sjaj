@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex">
     <input class="text-4xl m-5" @keyup="changeSearchValue" type="text" v-model="search" placeholder="Pretraži..." />
     <button
       id="clear"
