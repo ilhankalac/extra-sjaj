@@ -23,9 +23,10 @@
         </li>
         <li @click="changeDebtBool()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
           <span class="material-icons"> attach_money </span>
-          <span>
+          <span v-if="!showDebtors">
             Prikaži dužnike
           </span>
+          <span v-else> Svi</span>
         </li>
       </ul>
     </div>
@@ -113,7 +114,7 @@ export default {
       showDebtors.value = !showDebtors.value;
     };
 
-    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search, changeDebtBool };
+    return { customers, error, searchValStore, changeSearchValue, filteredCustomers, search, changeDebtBool, showDebtors };
   },
 };
 </script>
