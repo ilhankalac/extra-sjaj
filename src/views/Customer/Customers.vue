@@ -16,20 +16,17 @@
 
   <div v-if="!filteredCustomers?.length > 0" class="loader"></div>
   <div class="flex flex-wrap justify-center" style=" text-shadow: 1px 1px black;">
-    <div
-      class="w-72 m-2 max-w-md bg-gray-400  hover:bg-gray-500 rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl "
-      @click="createNewCustomer()"
-    >
-      <div class="flex items-center justify-center h-full">
-        <h3>
-          <span class="material-icons">
-            library_add_check
-          </span>
-        </h3>
-        <p class="m-y-50">&nbsp; NOVA MUŠTERIJA</p>
-      </div>
+    <div class="w-72 m-2 max-w-md bg-gray-400  rounded-xl shadow-md overflow-hidden text-white md:max-w-2xl">
+      <ul class="text-2xl m-3">
+        <li @click="createNewCustomer()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
+          <span class="material-icons"> library_add_check </span> Nova mušterija
+        </li>
+        <li @click="filterDebtors()" class="flex  gap-3 hover:bg-gray-500 rounded-2xl">
+          <span class="material-icons"> attach_money </span>Prikaži dužnike
+        </li>
+      </ul>
     </div>
-    <!-- class="w-72 m-2 bg-green-500 hover:bg-green-600 rounded-xl shadow-md text-white"  -->
+
     <div
       v-for="customer in filteredCustomers"
       :key="customer.id"
