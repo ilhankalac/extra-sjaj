@@ -9,7 +9,7 @@
       <p class="text-red-800 lg:text-4xl sm:text-2xl font-medium">Extra Sjaj - servis za pranje tepiha</p>
       <input type="email" required placeholder="Email" v-model="email" />
       <input type="password" required placeholder="Lozinka" v-model="password" />
-      <div class="error">{{ error }}</div>
+      <div class="text-red-600 font-bold">{{ error }}</div>
       <button class="bg-red-500  hover:bg-red-600 h-16 text-white ">Prijavi se</button>
     </form>
   </div>
@@ -43,10 +43,4 @@ export default {
 };
 </script>
 
-<style>
-.error {
-  color: red;
-  margin: 10px;
-  font-weight: bold;
-}
-</style>
+<style></style>
