@@ -1,7 +1,9 @@
 <template>
   <div class="h-20 bg-red-600 flex justify-between items-center ">
     <div class="space-x-5 ml-8">
-      <button class="btn hover:bg-red-700 text-white text-lg font-bold">Tepisi</button>
+      <router-link :to="{ name: 'Customer' }">
+        <button class="btn hover:bg-red-700 text-white text-lg font-bold">Tepisi</button>
+      </router-link>
       <button class="btn hover:bg-red-700  text-white text-lg font-bold">Statistika</button>
     </div>
     <div class="flex flex-col text-white ">

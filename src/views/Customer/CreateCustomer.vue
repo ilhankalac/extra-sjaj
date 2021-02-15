@@ -5,7 +5,13 @@
         arrow_back
       </span>
     </button>
-    <ViewDetails :total="total" :payed="customerObj?.Placeno" :carpetsNumber="customerObj?.Carpets.length" @click="changePayedStatus()" />
+    <ViewDetails
+      class="cursor-pointer"
+      :total="total"
+      :payed="customerObj?.Placeno"
+      :carpetsNumber="customerObj?.Carpets.length"
+      @click="changePayedStatus()"
+    />
   </div>
   <div class="lg:mx-64 text-4xl sm:mx-10">
     <label> Ime i prezime </label>
